@@ -8,24 +8,20 @@
       src="https://cdn.vuetifyjs.com/images/backgrounds/bg-2.jpg"
     >
       <v-list>
-        <v-list-item v-for="(item, i) in destinations" :key="i" link>
-          <v-list-item-icon>
-            <v-icon>{{ item.name }}</v-icon>
-          </v-list-item-icon>
-          <v-icon large>mdi-code-tags</v-icon>
-          <v-list-item-content>
-            <v-list-item-title>info</v-list-item-title>
-          </v-list-item-content>
-        </v-list-item>
+        <router-link v-for="(item, i) in destinations" :key="i" :to="item.path">
+          <v-list-item link>
+            <v-list-item-icon>
+              <v-icon>{{ item.icon }}</v-icon>
+            </v-list-item-icon>
+            <v-list-item-content>
+              <v-list-item-title>{{item.name}}</v-list-item-title>
+            </v-list-item-content>
+          </v-list-item>
+        </router-link>
       </v-list>
     </v-navigation-drawer>
 
-    <v-app-bar
-      app
-      src="https://cdn.vuetifyjs.com/images/backgrounds/bg-2.jpg"
-      dark
-      clipped-left
-    >
+    <v-app-bar app src="https://cdn.vuetifyjs.com/images/backgrounds/bg-2.jpg" dark clipped-left>
       <v-app-bar-nav-icon @click.stop="drawer = !drawer" />
       <v-toolbar-title>Menu</v-toolbar-title>
     </v-app-bar>
@@ -44,12 +40,12 @@ import router from "@/router/router.js";
 export default {
   name: "App",
   props: {
-    source: String,
+    source: String
   },
   data: () => ({
     drawer: null,
-    destinations: router.menuLateral,
-  }),
+    destinations: router.menuLateral
+  })
 };
 </script>
 

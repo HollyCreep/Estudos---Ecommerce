@@ -3,7 +3,7 @@ import App from "./App.vue";
 import router from "./router";
 import vuetify from "./plugins/vuetify";
 
-import "C:/xampp/htdocs/mobile_stock/fornecedores/src/assets/css/basic.css";
+import "../src/assets/css/basic.css";
 Vue.config.productionTip = false;
 
 new Vue({
