@@ -50,7 +50,7 @@
               <router-link to="produtos-cadastrar">
                 <v-btn class="orange">
                   Cadastrar
-                  <v-icon>mdi-plus</v-icon>
+                  <!-- <v-icon>mdi-plus</v-icon> -->
                 </v-btn>
               </router-link>
             </v-col>
@@ -60,7 +60,14 @@
 
       <template v-slot:default="props">
         <v-row>
-          <v-col v-for="item in props.items" :key="item.name" cols="12" sm="6" md="4" lg="3">
+          <v-col
+            v-for="item in props.items"
+            :key="item.name"
+            cols="12"
+            sm="6"
+            md="4"
+            lg="3"
+          >
             <v-card raised>
               <v-btn fab absolute small @click="editarProduto(item.id)">
                 <v-icon dark color="blue darken-3">mdi-pencil</v-icon>
@@ -70,7 +77,9 @@
                 class="white--text align-end"
                 gradient="to bottom, rgba(0,0,0,.1), rgba(0,0,0,.5)"
               >
-                <v-card-title v-text="$options.filters.upperCase(item.referencia)"></v-card-title>
+                <v-card-title
+                  v-text="$options.filters.upperCase(item.referencia)"
+                ></v-card-title>
               </v-img>
               <v-divider></v-divider>
               <v-expansion-panels>
@@ -86,13 +95,16 @@
                         :id="item.id"
                         class="li-border-bottom"
                       >
-                        <v-list-item-content :class="{ 'blue--text': sortBy === key }">
+                        <v-list-item-content
+                          :class="{ 'blue--text': sortBy === key }"
+                        >
                           <b>{{ key | upperCase }}:</b>
                         </v-list-item-content>
                         <v-list-item-content
                           class="align-end; justify-end"
                           :class="{ 'blue--text': sortBy === key }"
-                        >{{ item[key.toLowerCase()] }}</v-list-item-content>
+                          >{{ item[key.toLowerCase()] }}</v-list-item-content
+                        >
                       </v-list-item>
                     </v-list>
                   </v-expansion-panel-content>
@@ -100,8 +112,8 @@
                   <v-card-actions>
                     <v-spacer></v-spacer>
 
-                    <v-btn icon @click=" item.liked = !item.liked">
-                      <v-icon :class="{ 'liked': item.liked }">mdi-heart</v-icon>
+                    <v-btn icon @click="item.liked = !item.liked">
+                      <v-icon :class="{ liked: item.liked }">mdi-heart</v-icon>
                     </v-btn>
 
                     <v-btn icon>
@@ -144,8 +156,16 @@
 
           <v-spacer></v-spacer>
 
-          <span class="mr-4 grey--text">Page {{ page }} of {{ numberOfPages }}</span>
-          <v-btn fab dark color="blue darken-3" class="mr-1" @click="formerPage">
+          <span class="mr-4 grey--text"
+            >Page {{ page }} of {{ numberOfPages }}</span
+          >
+          <v-btn
+            fab
+            dark
+            color="blue darken-3"
+            class="mr-1"
+            @click="formerPage"
+          >
             <v-icon>mdi-chevron-left</v-icon>
           </v-btn>
           <v-btn fab dark color="blue darken-3" class="ml-1" @click="nextPage">
@@ -179,7 +199,7 @@ export default {
           src: "imagem1.jpg",
           referencia: "sandália 16001 - Preta",
           descrição: "Produzida com os mais altos padrões de qualidade",
-          liked: 1
+          liked: 1,
         },
         {
           id: 1,
@@ -187,7 +207,7 @@ export default {
           src: "imagem2.jpg",
           referencia: "Bota 17002 - Preta",
           descrição: "Produzida com os mais altos padrões de qualidade",
-          liked: 1
+          liked: 1,
         },
         {
           id: 2,
@@ -195,7 +215,7 @@ export default {
           src: "imagem3.jpg",
           referencia: "Sapatilha 18003 - Preta/Onça",
           descrição: "Produzida com os mais altos padrões de qualidade",
-          liked: 0
+          liked: 0,
         },
         {
           id: 3,
@@ -203,7 +223,7 @@ export default {
           src: "imagem4.jpg",
           referencia: "Tamanco 19004 - Azul/Caramelo",
           descrição: "Produzida com os mais altos padrões de qualidade",
-          liked: 0
+          liked: 0,
         },
         {
           id: 4,
@@ -211,7 +231,7 @@ export default {
           src: "imagem1.jpg",
           referencia: "sandália 16001 - Preta",
           descrição: "Produzida com os mais altos padrões de qualidade",
-          liked: 0
+          liked: 0,
         },
         {
           id: 5,
@@ -219,7 +239,7 @@ export default {
           src: "imagem2.jpg",
           referencia: "Bota 17002 - Preta",
           descrição: "Produzida com os mais altos padrões de qualidade",
-          liked: 0
+          liked: 0,
         },
         {
           id: 6,
@@ -228,7 +248,7 @@ export default {
           referencia: "Sapatilha 18003 - Preta/Onça",
           descrição:
             "Produzida com os mais altos padrões de qualidadeaaaaaaaaaaaaaaaaaaaaaa",
-          liked: 0
+          liked: 0,
         },
         {
           id: 7,
@@ -236,7 +256,7 @@ export default {
           src: "imagem4.jpg",
           referencia: "Tamanco 19004 - Azul/Caramelo",
           descrição: "Produzida com os mais altos padrões de qualidade",
-          liked: 0
+          liked: 0,
         },
         {
           id: 8,
@@ -244,7 +264,7 @@ export default {
           src: "imagem1.jpg",
           referencia: "sandália 16001 - Preta",
           descrição: "Produzida com os mais altos padrões de qualidade",
-          liked: 0
+          liked: 0,
         },
         {
           id: 9,
@@ -252,7 +272,7 @@ export default {
           src: "imagem2.jpg",
           referencia: "Bota 17002 - Preta",
           descrição: "Produzida com os mais altos padrões de qualidade",
-          liked: 0
+          liked: 0,
         },
         {
           id: 10,
@@ -261,7 +281,7 @@ export default {
           referencia: "Sapatilha 18003 - Preta/Onça",
           descrição:
             "Produzida com os mais altos padrões de qualidadeaaaaaaaaaaaaaaaaaaaaaa",
-          liked: 0
+          liked: 0,
         },
         {
           id: 11,
@@ -269,9 +289,9 @@ export default {
           src: "imagem4.jpg",
           referencia: "Tamanco 19004 - Azul/Caramelo",
           descrição: "Produzida com os mais altos padrões de qualidade",
-          liked: 0
-        }
-      ]
+          liked: 0,
+        },
+      ],
     };
   },
   computed: {
@@ -279,8 +299,8 @@ export default {
       return Math.ceil(this.items.length / this.itemsPerPage);
     },
     filteredKeys() {
-      return this.keys.filter(key => key !== `Name`);
-    }
+      return this.keys.filter((key) => key !== `Name`);
+    },
   },
   methods: {
     getImgUrl(img) {
@@ -297,7 +317,7 @@ export default {
     },
     editarProduto(id) {
       console.log(id);
-    }
+    },
   },
   filters: {
     upperCase(value) {
@@ -307,8 +327,8 @@ export default {
     toBold(value) {
       value = value.toString();
       return value.bold();
-    }
-  }
+    },
+  },
 };
 </script>
 

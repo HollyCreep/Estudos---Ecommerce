@@ -7,6 +7,7 @@
       :success="valid"
       v-bind="$attrs"
       v-on="$listeners"
+      filled
     ></v-text-field>
   </ValidationProvider>
 </template>
