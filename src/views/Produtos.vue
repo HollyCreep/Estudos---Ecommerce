@@ -1,13 +1,5 @@
 <template>
   <v-container fluid>
-    <v-toolbar class="mb-1">
-      <router-link to="produtos-cadastrar">
-        <v-btn>
-          Cadastrar
-          <v-icon>mdi-plus</v-icon>
-        </v-btn>
-      </router-link>
-    </v-toolbar>
     <v-data-iterator
       :items="items"
       :items-per-page.sync="itemsPerPage"
@@ -19,36 +11,50 @@
     >
       <template v-slot:header>
         <v-toolbar dark color="blue darken-3" class="mb-1">
-          <v-text-field
-            v-model="search"
-            clearable
-            flat
-            solo-inverted
-            hide-details
-            prepend-inner-icon="mdi-magnify"
-            label="Pesquisa"
-          ></v-text-field>
-          <template v-if="$vuetify.breakpoint.smAndUp">
-            <v-spacer></v-spacer>
-            <v-select
-              v-model="sortBy"
-              flat
-              solo-inverted
-              hide-details
-              :items="keys"
-              prepend-inner-icon="mdi-magnify"
-              label="Ordenar por"
-            ></v-select>
-            <v-spacer></v-spacer>
-            <v-btn-toggle v-model="sortDesc" mandatory>
-              <v-btn small depressed color="blue" :value="false">
-                <v-icon>mdi-arrow-up</v-icon>
-              </v-btn>
-              <v-btn small depressed color="blue" :value="true">
-                <v-icon>mdi-arrow-down</v-icon>
-              </v-btn>
-            </v-btn-toggle>
-          </template>
+          <v-row>
+            <v-col cols="6" sm="3">
+              <v-text-field
+                v-model="search"
+                clearable
+                flat
+                solo-inverted
+                hide-details
+                prepend-inner-icon="mdi-magnify"
+                label="Pesquisa"
+              ></v-text-field>
+            </v-col>
+            <template v-if="$vuetify.breakpoint.smAndUp">
+              <v-col sm="3">
+                <v-select
+                  v-model="sortBy"
+                  flat
+                  solo-inverted
+                  hide-details
+                  :items="keys"
+                  prepend-inner-icon="mdi-magnify"
+                  label="Ordenar por"
+                ></v-select>
+              </v-col>
+              <v-col sm="2" class="d-flex align-center">
+                <v-btn-toggle v-model="sortDesc" mandatory>
+                  <v-btn small depressed color="blue" :value="false">
+                    <v-icon>mdi-arrow-up</v-icon>
+                  </v-btn>
+                  <v-btn small depressed color="blue" :value="true">
+                    <v-icon>mdi-arrow-down</v-icon>
+                  </v-btn>
+                </v-btn-toggle>
+              </v-col>
+            </template>
+            <v-col cols="6" sm="4" class="d-flex justify-end align-center">
+              <router-link to="produtos-cadastrar">
+                <v-btn class="orange">
+                  Cadastrar
+                  <v-icon>mdi-plus</v-icon>
+                </v-btn>
+              </router-link>
+            </v-col>
+          </v-row>
         </v-toolbar>
       </template>
 
