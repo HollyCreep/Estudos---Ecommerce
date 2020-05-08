@@ -4,11 +4,9 @@
       <v-toolbar dark color="primary">
         <v-toolbar-title>Cadastrar Produto</v-toolbar-title>
         <v-spacer></v-spacer>
-        <router-link to="produtos">
-          <v-btn outlined rounded>
-            <v-icon>mdi-close</v-icon>
-          </v-btn>
-        </router-link>
+        <v-btn outlined rounded @click="$router.go(-1)">
+          <v-icon>mdi-close</v-icon>
+        </v-btn>
       </v-toolbar>
       <v-card-text>
         <v-form>
@@ -144,12 +142,25 @@
                 </v-col>
                 <v-col cols="12" justify="flex-end">
                   <v-file-input
-                    accept="image/*"
-                    label="File input"
-                    prepend-icon="mdi-camera"
-                    dense
+                    v-model="files"
+                    color="primary"
+                    counter
+                    label="Upload"
+                    multiple
+                    placeholder="Upload de imagens"
+                    prepend-icon="mdi-paperclip"
                     outlined
-                  ></v-file-input>
+                    :show-size="1000"
+                  >
+                    <template v-slot:selection="{ index, text }">
+                      <v-chip v-if="index < 2" color="primary" dark label small>{{ text }}</v-chip>
+
+                      <span
+                        v-else-if="index === 2"
+                        class="overline grey--text text--darken-3 mx-2"
+                      >+{{ files.length - 2 }} File(s)</span>
+                    </template>
+                  </v-file-input>
                 </v-col>
               </v-row>
               <v-divider></v-divider>
@@ -188,6 +199,7 @@ import VFormTabelaPreco from "./FormTabelaPreco";
 import VCarouselProdutos from "../CarouselProduto";
 
 export default {
+  name: "FormProdutos",
   data: () => ({
     listaCategorias: ["", "Anabela", "Bota", "Tamanco", "Tenis", "Sapato"],
     listaGenero: ["", "Feminino", "Masculino", "Meninas", "Meninos"],
@@ -287,6 +299,7 @@ export default {
     materialCabedal: "",
     materialSolado: "",
     alturaSolado: "",
+    files: [],
     switchBloqueado: false,
     switchDestaque: false,
     switchPromocao: false,
@@ -302,7 +315,7 @@ export default {
   },
   methods: {
     async clear() {
-      this.referencia = this.premio = this.categoria = this.genero = this.tam_min = this.tam_max = this.preco = this.checkbox = this.materialCabedal = this.materialSolado = this.alturaSolado =
+      this.referencia = this.premio = this.categoria = this.genero = this.tam_min = this.tam_max = this.preco = this.checkbox = this.materialCabedal = this.materialSolado = this.alturaSolado = this.descricao =
         "";
       this.switchBloqueado = this.switchDestaque = this.switchPromocao = this.switchPremio = false;
       this.$nextTick(() => {

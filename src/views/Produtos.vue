@@ -47,7 +47,7 @@
               </v-col>
             </template>
             <v-col cols="6" sm="4" class="d-flex justify-end align-center">
-              <router-link to="produtos-cadastrar">
+              <router-link to="produtos/cadastrar">
                 <v-btn class="orange">
                   Cadastrar
                   <!-- <v-icon>mdi-plus</v-icon> -->
