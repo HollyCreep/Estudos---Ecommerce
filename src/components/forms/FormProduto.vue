@@ -3,28 +3,28 @@
     <v-card class="elevation-12" slot-scope="{ invalid, validated }">
       <v-toolbar dark color="primary">
         <v-toolbar-title>Cadastrar Produto</v-toolbar-title>
+        <v-spacer></v-spacer>
+        <router-link to="produtos">
+          <v-btn outlined rounded>
+            <v-icon>mdi-close</v-icon>
+          </v-btn>
+        </router-link>
       </v-toolbar>
       <v-card-text>
         <v-form>
           <v-row>
             <v-col cols="12" sm="6" justify="center">
               <v-row justify="space-between">
-                <v-col cols="12" sm="6" justify="flex-end">
+                <v-col cols="12" justify="flex-end">
                   <VTextFieldWithValidation
                     rules="required|max:32"
                     v-model="referencia"
                     :counter="32"
                     label="Referência"
+                    hint="Nome/código do produto"
                   />
                 </v-col>
-                <v-col cols="12" sm="6" justify="flex-end">
-                  <VTextFieldWithValidation
-                    rules="required|max:32"
-                    v-model="premio"
-                    :counter="32"
-                    label="Prêmio"
-                  />
-                </v-col>
+                <v-col cols="12" sm="6" justify="flex-end"></v-col>
               </v-row>
               <v-row justify="space-between">
                 <v-col cols="12" sm="6" justify="flex-end">
@@ -138,25 +138,31 @@
                 <v-col cols="12" justify="center">
                   <v-layout align-center justify-center>
                     <v-flex xs12 sm8 md12 height="200px">
-                      <VCarouselProdutos :slides="listaFotosProduto" />
+                      <VCarouselProdutos :slides="listaFotosProduto" border="solid" />
                     </v-flex>
                   </v-layout>
                 </v-col>
                 <v-col cols="12" justify="flex-end">
-                  <VTextFieldWithValidation
-                    rules="required|max:32"
-                    v-model="premio"
-                    :counter="32"
-                    label="Material do Solado"
-                  />
+                  <v-file-input
+                    accept="image/*"
+                    label="File input"
+                    prepend-icon="mdi-camera"
+                    dense
+                    outlined
+                  ></v-file-input>
                 </v-col>
+              </v-row>
+              <v-divider></v-divider>
+              <v-row justify="center">
                 <v-col cols="12" justify="flex-end">
-                  <VTextFieldWithValidation
-                    rules="required|max:32"
-                    v-model="premio"
-                    :counter="32"
-                    label="Altura do Solado"
-                  />
+                  <v-textarea
+                    clearable
+                    outlined
+                    dense
+                    v-model="descricao"
+                    clear-icon="mdi-close"
+                    label="Descrição"
+                  ></v-textarea>
                 </v-col>
               </v-row>
             </v-col>
@@ -221,24 +227,24 @@ export default {
       },
       {
         id: 4,
-        sequencia: "0",
-        src: "imagem1.jpg",
+        sequencia: "4",
+        src: "imagem5.png",
         referencia: "sandália 16001 - Preta",
         descrição: "Produzida com os mais altos padrões de qualidade",
         liked: 0
       },
       {
         id: 5,
-        sequencia: "1",
-        src: "imagem2.jpg",
+        sequencia: "5",
+        src: "imagem6.png",
         referencia: "Bota 17002 - Preta",
         descrição: "Produzida com os mais altos padrões de qualidade",
         liked: 0
       },
       {
         id: 6,
-        sequencia: "2",
-        src: "imagem3.jpg",
+        sequencia: "6",
+        src: "imagem7.jpg",
         referencia: "Sapatilha 18003 - Preta/Onça",
         descrição:
           "Produzida com os mais altos padrões de qualidadeaaaaaaaaaaaaaaaaaaaaaa",
@@ -246,48 +252,31 @@ export default {
       },
       {
         id: 7,
-        sequencia: "3",
-        src: "imagem4.jpg",
+        sequencia: "7",
+        src: "imagem8.png",
         referencia: "Tamanco 19004 - Azul/Caramelo",
         descrição: "Produzida com os mais altos padrões de qualidade",
         liked: 0
       },
       {
         id: 8,
-        sequencia: "0",
-        src: "imagem1.jpg",
+        sequencia: "8",
+        src: "imagem9.jpg",
         referencia: "sandália 16001 - Preta",
         descrição: "Produzida com os mais altos padrões de qualidade",
         liked: 0
       },
       {
         id: 9,
-        sequencia: "1",
-        src: "imagem2.jpg",
+        sequencia: "9",
+        src: "imagem0.png",
         referencia: "Bota 17002 - Preta",
-        descrição: "Produzida com os mais altos padrões de qualidade",
-        liked: 0
-      },
-      {
-        id: 10,
-        sequencia: "2",
-        src: "imagem3.jpg",
-        referencia: "Sapatilha 18003 - Preta/Onça",
-        descrição:
-          "Produzida com os mais altos padrões de qualidadeaaaaaaaaaaaaaaaaaaaaaa",
-        liked: 0
-      },
-      {
-        id: 11,
-        sequencia: "3",
-        src: "imagem4.jpg",
-        referencia: "Tamanco 19004 - Azul/Caramelo",
         descrição: "Produzida com os mais altos padrões de qualidade",
         liked: 0
       }
     ],
     referencia: "",
-    premio: "",
+    descricao: "",
     categoria: "",
     genero: "",
     tam_min: "",

@@ -1,6 +1,6 @@
 <template>
   <ValidationProvider :name="$attrs.label" :rules="rules">
-    <v-select
+    <v-textarea
       slot-scope="{ errors, valid }"
       v-model="innerValue"
       :error-messages="errors"
@@ -8,7 +8,9 @@
       v-bind="$attrs"
       v-on="$listeners"
       outlined
-    ></v-select>
+      clearable
+      clear-icon="mdi-close"
+    ></v-textarea>
   </ValidationProvider>
 </template>
 
@@ -24,6 +26,7 @@ export default {
       type: [Object, String],
       default: ""
     },
+    // must be included in props
     value: {
       type: null
     }

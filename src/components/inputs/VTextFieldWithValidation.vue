@@ -7,7 +7,7 @@
       :success="valid"
       v-bind="$attrs"
       v-on="$listeners"
-      filled
+      outlined
     ></v-text-field>
   </ValidationProvider>
 </template>
@@ -17,20 +17,20 @@ import { ValidationProvider } from "vee-validate";
 
 export default {
   components: {
-    ValidationProvider,
+    ValidationProvider
   },
   props: {
     rules: {
       type: [Object, String],
-      default: "",
+      default: ""
     },
     // must be included in props
     value: {
-      type: null,
-    },
+      type: null
+    }
   },
   data: () => ({
-    innerValue: "",
+    innerValue: ""
   }),
   watch: {
     // Handles internal model changes.
@@ -40,12 +40,12 @@ export default {
     // Handles external model changes.
     value(newVal) {
       this.innerValue = newVal;
-    },
+    }
   },
   created() {
     if (this.value) {
       this.innerValue = this.value;
     }
-  },
+  }
 };
 </script>
