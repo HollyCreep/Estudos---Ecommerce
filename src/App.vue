@@ -54,7 +54,7 @@
           </v-card-text>
         </v-card>
       </v-dialog>
-      <router-view></router-view>
+      <router-view @loading=" carregamento"></router-view>
     </v-content>
     <v-footer color="blue darken-1" app>
       <span class="white--text">&copy; 2019</span>
@@ -74,6 +74,11 @@ export default {
     destinations: router.menuLateral,
     loading: false,
   }),
+  methods: {
+    carregamento(status) { 
+      this.loading = status
+    }
+  },
   watch: {
     loading(val) {
       if (!val) return;

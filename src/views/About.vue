@@ -10,16 +10,6 @@
       <h1>Não ta dando</h1>
     </div>
     <v-content>
-      <v-dialog v-if="loading" v-model="loading" persistent retain-focus width="300">
-        <v-card color="primary" dark>
-          <v-card-text>
-            <v-row class="mt-2" align="center" justify="center">Carregando...</v-row>
-            <v-row class="mt-2" align="center" justify="center">
-              <v-progress-circular indeterminate color="white" class="mb-0"></v-progress-circular>
-            </v-row>
-          </v-card-text>
-        </v-card>
-      </v-dialog>
       <router-view></router-view>
     </v-content>
   </v-container>
@@ -30,7 +20,6 @@ export default {
   data() {
     return {
       cervejarias: [],
-      loading: false,
       post: null,
       error: null
     };
@@ -48,22 +37,21 @@ export default {
   methods: {
     fetchData() {
       this.error = this.post = null;
-      this.loading = true;
-      // replace `getPost` with your data fetching util / API wrapper
+      this.$emit('loading', true);
       this.$http
         .get("https://jsonplaceholder.typicode.com/albums/1/photos/")
         .then(
           response => {
             // this.$set(this.cervejarias, response);
             this.cervejarias = response.data;
-            this.loading = false;
+            this.$emit('loading', false);
           },
           error => {
-            this.loading = false;
+            this.$emit('loading', false);
             this.error = error;
           }
         );
-    }
+    },
   }
 };
 </script>
