@@ -47,7 +47,7 @@
               </v-col>
             </template>
             <v-col cols="6" sm="4" class="d-flex justify-end align-center">
-              <router-link to="produtos/cadastrar">
+              <router-link :to="{name: 'cadastrarProdutos'}">
                 <v-btn class="orange">
                   Cadastrar
                   <!-- <v-icon>mdi-plus</v-icon> -->
@@ -62,9 +62,11 @@
         <v-row>
           <v-col v-for="item in props.items" :key="item.name" cols="12" sm="6" md="4" lg="3">
             <v-card raised>
-              <v-btn fab absolute small @click="editarProduto(item.id)">
-                <v-icon dark color="blue darken-3">mdi-pencil</v-icon>
-              </v-btn>
+              <router-link :to="{ name: 'editarProdutos', params: {produto: item}}">
+                <v-btn fab absolute small>
+                  <v-icon dark color="blue darken-3">mdi-pencil</v-icon>
+                </v-btn>
+              </router-link>
               <v-img
                 :src="getImgUrl(item.src)"
                 class="white--text align-end"
@@ -291,9 +293,6 @@ export default {
     },
     updateItemsPerPage(number) {
       this.itemsPerPage = number;
-    },
-    editarProduto(id) {
-      console.log(id);
     }
   },
   filters: {

@@ -27,6 +27,15 @@ const routes = [
     component: () =>
       import(/* webpackChunkName: "about" */ "../views/Produtos-Cadastrar.vue"),
   },
+  {
+    path: "/produtos/editar/",
+    name: "editarProdutos",
+    props(route) {
+      return route.params || {};
+    },
+    component: () =>
+      import(/* webpackChunkName: "about" */ "../views/Produtos-Editar.vue"),
+  },
 ];
 
 const router = new VueRouter({
