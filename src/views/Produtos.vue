@@ -106,10 +106,6 @@
                     </v-btn>
 
                     <v-btn icon>
-                      <v-icon>mdi-bookmark</v-icon>
-                    </v-btn>
-
-                    <v-btn icon>
                       <v-icon>mdi-share-variant</v-icon>
                     </v-btn>
                   </v-card-actions>
@@ -125,7 +121,7 @@
       <template v-slot:footer>
         <v-container fluid>
           <v-row class="mt-2" align="center" justify="center">
-            <span class="grey--text">Items per page</span>
+            <span class="grey--text">Items por Página</span>
             <v-menu offset-y>
               <template v-slot:activator="{ on }">
                 <v-btn dark text color="primary" class="ml-2" v-on="on">
@@ -146,7 +142,7 @@
 
             <v-spacer></v-spacer>
 
-            <span class="mr-4 grey--text">Page {{ page }} of {{ numberOfPages }}</span>
+            <span class="mr-4 grey--text">Página {{ page }} de {{ numberOfPages }}</span>
             <v-btn fab dark color="blue darken-3" class="mr-1" @click="formerPage" small>
               <v-icon>mdi-chevron-left</v-icon>
             </v-btn>
@@ -160,11 +156,9 @@
   </v-container>
 </template>
 <script>
-import CardProduto from "../components/CardProduto.vue";
-
 export default {
   name: "Produtos",
-  components: { "card-produto": CardProduto },
+  components: {},
   data() {
     return {
       itemsPerPageArray: [4, 8, 12],

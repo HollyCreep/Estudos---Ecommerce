@@ -1,57 +1,66 @@
 <template>
-  <v-container grid-list-lg>
-    <div v-if="cervejarias" class="about">
-      <h1
-        v-for="(item, index) in cervejarias"
-        :key="index"
-      >ID: {{ item.id }} - Titulo: {{ item.title }}</h1>
-    </div>
-    <div v-else class="about">
-      <h1>Não ta dando</h1>
-    </div>
-    <v-content>
-      <router-view></router-view>
-    </v-content>
-  </v-container>
+  <v-app id="app" class="mt-0">
+    <v-container grid-list-xl>
+      <image-input v-model="avatar">
+        <div slot="activator">
+          <v-avatar size="150px" v-ripple v-if="!avatar" class="grey lighten-3 mb-3">
+            <span>Click to add avatar</span>
+          </v-avatar>
+          <v-avatar size="150px" v-ripple v-else class="mb-3">
+            <img :src="avatar.imageURL" alt="avatar" />
+          </v-avatar>
+        </div>
+      </image-input>
+      <v-slide-x-transition>
+        <div v-if="avatar && saved == false">
+          <v-btn class="primary" @click="uploadImage" :loading="saving">Save Avatar</v-btn>
+        </div>
+      </v-slide-x-transition>
+    </v-container>
+  </v-app>
 </template>
 
 <script>
+import ImageInput from "../components/image-uploader.vue";
 export default {
+  name: "app",
   data() {
     return {
-      cervejarias: [],
-      post: null,
-      error: null
+      avatar: null,
+      saving: false,
+      saved: false
     };
   },
-  mounted: function() {},
-  created() {
-    // fetch the data when the view is created and the data is
-    // already being observed
-    this.fetchData();
+  components: {
+    ImageInput: ImageInput
   },
   watch: {
-    // call again the method if the route changes
-    $route: "fetchData"
+    avatar: {
+      handler: function() {
+        this.saved = false;
+      },
+      deep: true
+    }
   },
   methods: {
-    fetchData() {
-      this.error = this.post = null;
-      this.$emit('loading', true);
-      this.$http
-        .get("https://jsonplaceholder.typicode.com/albums/1/photos/")
-        .then(
-          response => {
-            // this.$set(this.cervejarias, response);
-            this.cervejarias = response.data;
-            this.$emit('loading', false);
-          },
-          error => {
-            this.$emit('loading', false);
-            this.error = error;
-          }
-        );
+    async uploadImage() {
+      this.saving = true;
+      setTimeout(() => this.savedAvatar(), 1000);
     },
+    async savedAvatar() {
+      this.saving = false;
+      this.saved = true;
+    }
   }
 };
 </script>
+
+<style>
+#app {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-align: center;
+  color: #2c3e50;
+  margin-top: 60px;
+}
+</style>

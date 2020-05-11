@@ -1,6 +1,6 @@
 <template>
   <v-carousel height="300px" hide-delimiter-background delimiter-icon="mdi-minus">
-    <v-carousel-item v-for="(item, i) in slides" :key="i" :src="getImgUrl(item.src)" contain></v-carousel-item>
+    <v-carousel-item v-for="(item, i) in slides" :key="i" :src="item.src" contain></v-carousel-item>
   </v-carousel>
 </template>
 

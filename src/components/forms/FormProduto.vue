@@ -16,7 +16,7 @@
                 <v-col cols="12" justify="flex-end">
                   <VTextFieldWithValidation
                     rules="required|max:32"
-                    v-model="referencia"
+                    v-model="innerProduto.referencia"
                     :counter="32"
                     label="Referência"
                     hint="Nome/código do produto"
@@ -29,7 +29,7 @@
                   <VSelectWithValidation
                     rules="required"
                     :items="listaCategorias"
-                    v-model="categoria"
+                    v-model="innerProduto.categoria"
                     label="Categoria"
                   />
                 </v-col>
@@ -37,7 +37,7 @@
                   <VSelectWithValidation
                     rules="required"
                     :items="listaGenero"
-                    v-model="genero"
+                    v-model="innerProduto.genero"
                     label="Gênero"
                   />
                 </v-col>
@@ -46,14 +46,14 @@
                 <v-col cols="12" sm="6" justify="flex-end">
                   <VTextFieldWithValidation
                     rules="required"
-                    v-model="tam_min"
+                    v-model="innerProduto.tam_min"
                     label="Tamanho Mínimo"
                   />
                 </v-col>
                 <v-col cols="12" sm="6" justify="flex-end">
                   <VTextFieldWithValidation
                     rules="required"
-                    v-model="tam_max"
+                    v-model="innerProduto.tam_max"
                     label="Tamanho Máximo"
                   />
                 </v-col>
@@ -62,7 +62,7 @@
                 <v-col cols="12" sm="6" justify="flex-end">
                   <VTextFieldWithValidation
                     rules="required|min_value:1"
-                    v-model="preco"
+                    v-model="innerProduto.preco"
                     label="Preço"
                     placeholder="0.00"
                   />
@@ -71,7 +71,7 @@
                   <VSelectWithValidation
                     rules="required"
                     :items="listaTabelaPreco"
-                    v-model="tabelaPreco"
+                    v-model="innerProduto.tabelaPreco"
                     label="Tabela de Preços"
                   />
                 </v-col>
@@ -79,34 +79,24 @@
               <h2>Opções</h2>
               <v-divider></v-divider>
               <v-row justify="space-between">
-                <v-col cols="3">
-                  <v-switch v-model="switchBloqueado">
-                    <template v-slot:label>Bloqueado:</template>
-                  </v-switch>
-                </v-col>
-                <v-col cols="3">
-                  <v-switch v-model="switchPromocao">
+                <v-col cols="6">
+                  <v-switch v-model="innerProduto.switchPromocao">
                     <template v-slot:label>Promoção:</template>
                   </v-switch>
                 </v-col>
-                <v-col cols="3">
-                  <v-switch v-model="switchDestaque">
-                    <template v-slot:label>Destaque:</template>
-                  </v-switch>
-                </v-col>
-                <v-col cols="3">
-                  <v-switch v-model="switchPremio">
+                <v-col cols="6">
+                  <v-switch v-model="innerProduto.switchPremio">
                     <template v-slot:label>Prêmio:</template>
                   </v-switch>
                 </v-col>
               </v-row>
-              <h2>Material do Cabedal</h2>
+              <h2>Material do Produto</h2>
               <v-divider></v-divider>
               <v-row justify="space-between">
                 <v-col cols="4" justify="flex-end">
                   <VTextFieldWithValidation
                     rules="required|max:32"
-                    v-model="materialCabedal"
+                    v-model="innerProduto.materialCabedal"
                     :counter="32"
                     label="Material Cabedal"
                   />
@@ -114,7 +104,7 @@
                 <v-col cols="4" justify="flex-end">
                   <VTextFieldWithValidation
                     rules="required|max:32"
-                    v-model="materialSolado"
+                    v-model="innerProduto.materialSolado"
                     :counter="32"
                     label="Material Solado"
                   />
@@ -122,7 +112,7 @@
                 <v-col cols="4" justify="flex-end">
                   <VTextFieldWithValidation
                     rules="required|max:32"
-                    v-model="alturaSolado"
+                    v-model="innerProduto.alturaSolado"
                     :counter="32"
                     label="Altura do Salto"
                   />
@@ -133,10 +123,10 @@
               <h2>Material Visual</h2>
               <v-divider></v-divider>
               <v-row justify="center">
-                <v-col cols="12" justify="center">
+                <v-col cols="12" justify="center" v-show="innerProduto.fotosProduto.length > 0">
                   <v-layout align-center justify-center>
                     <v-flex xs12 sm8 md12 height="200px">
-                      <VCarouselProdutos :slides="listaFotosProduto" border="solid" />
+                      <VCarouselProdutos :slides="innerProduto.fotosProduto" border="solid" />
                     </v-flex>
                   </v-layout>
                 </v-col>
@@ -148,9 +138,10 @@
                     label="Upload"
                     multiple
                     placeholder="Upload de imagens"
-                    prepend-icon="mdi-paperclip"
                     outlined
                     :show-size="1000"
+                    @change="loadTextFromFile"
+                    @click:clear="(innerProduto.fotosProduto = [])"
                   >
                     <template v-slot:selection="{ index, text }">
                       <v-chip v-if="index < 2" color="primary" dark label small>{{ text }}</v-chip>
@@ -170,7 +161,7 @@
                     clearable
                     outlined
                     dense
-                    v-model="descricao"
+                    v-model="innerProduto.descricao"
                     clear-icon="mdi-close"
                     label="Descrição"
                   ></v-textarea>
@@ -201,110 +192,54 @@ import VCarouselProdutos from "../CarouselProduto";
 export default {
   name: "FormProdutos",
   data: () => ({
+    files: [],
     listaCategorias: ["", "Anabela", "Bota", "Tamanco", "Tenis", "Sapato"],
     listaGenero: ["", "Feminino", "Masculino", "Meninas", "Meninos"],
     listaTabelaPreco: ["", "10.0", "49.99", "100.0", "10.000"],
-    listaFotosProduto: [
-      {
-        id: 0,
-        sequencia: "0",
-        src: "imagem1.jpg",
-        referencia: "sandália 16001 - Preta",
-        descrição: "Produzida com os mais altos padrões de qualidade",
-        liked: 1
-      },
-      {
-        id: 1,
-        sequencia: "1",
-        src: "imagem2.jpg",
-        referencia: "Bota 17002 - Preta",
-        descrição: "Produzida com os mais altos padrões de qualidade",
-        liked: 1
-      },
-      {
-        id: 2,
-        sequencia: "2",
-        src: "imagem3.jpg",
-        referencia: "Sapatilha 18003 - Preta/Onça",
-        descrição: "Produzida com os mais altos padrões de qualidade",
-        liked: 0
-      },
-      {
-        id: 3,
-        sequencia: "3",
-        src: "imagem4.jpg",
-        referencia: "Tamanco 19004 - Azul/Caramelo",
-        descrição: "Produzida com os mais altos padrões de qualidade",
-        liked: 0
-      },
-      {
-        id: 4,
-        sequencia: "4",
-        src: "imagem5.png",
-        referencia: "sandália 16001 - Preta",
-        descrição: "Produzida com os mais altos padrões de qualidade",
-        liked: 0
-      },
-      {
-        id: 5,
-        sequencia: "5",
-        src: "imagem6.png",
-        referencia: "Bota 17002 - Preta",
-        descrição: "Produzida com os mais altos padrões de qualidade",
-        liked: 0
-      },
-      {
-        id: 6,
-        sequencia: "6",
-        src: "imagem7.jpg",
-        referencia: "Sapatilha 18003 - Preta/Onça",
-        descrição:
-          "Produzida com os mais altos padrões de qualidadeaaaaaaaaaaaaaaaaaaaaaa",
-        liked: 0
-      },
-      {
-        id: 7,
-        sequencia: "7",
-        src: "imagem8.png",
-        referencia: "Tamanco 19004 - Azul/Caramelo",
-        descrição: "Produzida com os mais altos padrões de qualidade",
-        liked: 0
-      },
-      {
-        id: 8,
-        sequencia: "8",
-        src: "imagem9.jpg",
-        referencia: "sandália 16001 - Preta",
-        descrição: "Produzida com os mais altos padrões de qualidade",
-        liked: 0
-      },
-      {
-        id: 9,
-        sequencia: "9",
-        src: "imagem0.png",
-        referencia: "Bota 17002 - Preta",
-        descrição: "Produzida com os mais altos padrões de qualidade",
-        liked: 0
-      }
-    ],
-    referencia: "",
-    descricao: "",
-    categoria: "",
-    genero: "",
-    tam_min: "",
-    tam_max: "",
-    preco: "",
-    checkbox: "",
-    tabelaPreco: "",
-    materialCabedal: "",
-    materialSolado: "",
-    alturaSolado: "",
-    files: [],
-    switchBloqueado: false,
-    switchDestaque: false,
-    switchPromocao: false,
-    switchPremio: false
+
+    innerProduto: {
+      referencia: "",
+      descricao: "",
+      categoria: "",
+      genero: "",
+      tam_min: "",
+      tam_max: "",
+      preco: "",
+      checkbox: "",
+      tabelaPreco: "",
+      materialCabedal: "",
+      materialSolado: "",
+      alturaSolado: "",
+      switchPromocao: false,
+      switchPremio: false,
+      fotosProduto: []
+    }
   }),
+  props: {
+    produto: {
+      type: Object,
+      required: false,
+      default: function() {
+        return {
+          referencia: "",
+          descricao: "",
+          categoria: "",
+          genero: "",
+          tam_min: "",
+          tam_max: "",
+          preco: "",
+          checkbox: "",
+          tabelaPreco: "",
+          materialCabedal: "",
+          materialSolado: "",
+          alturaSolado: "",
+          switchPromocao: false,
+          switchPremio: false,
+          fotosProduto: []
+        };
+      }
+    }
+  },
   components: {
     ValidationObserver,
     VTextFieldWithValidation,
@@ -315,15 +250,31 @@ export default {
   },
   methods: {
     async clear() {
-      this.referencia = this.premio = this.categoria = this.genero = this.tam_min = this.tam_max = this.preco = this.checkbox = this.materialCabedal = this.materialSolado = this.alturaSolado = this.descricao =
+      this.innerProduto.referencia = this.innerProduto.premio = this.innerProduto.categoria = this.innerProduto.genero = this.innerProduto.tam_min = this.innerProduto.tam_max = this.innerProduto.preco = this.innerProduto.checkbox = this.innerProduto.materialCabedal = this.innerProduto.materialSolado = this.innerProduto.alturaSolado = this.innerProduto.descricao =
         "";
-      this.switchBloqueado = this.switchDestaque = this.switchPromocao = this.switchPremio = false;
+      this.innerProduto.switchPromocao = this.innerProduto.switchPremio = false;
+
       this.$nextTick(() => {
         this.$refs.obs.reset();
       });
     },
     async submit() {
       const result = await this.$refs.obs.validate();
+    },
+    async loadTextFromFile(ev) {
+      ev.forEach(element => {
+        const file = element;
+        const reader = new FileReader();
+        reader.onload = event => {
+          this.innerProduto.fotosProduto.push({ src: event.target.result });
+        };
+        if (file) reader.readAsDataURL(file);
+      });
+    }
+  },
+  created() {
+    if (this.produto) {
+      this.innerProduto = this.produto;
     }
   }
 };
