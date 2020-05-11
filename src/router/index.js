@@ -14,6 +14,8 @@ const routes = [
     name: "About",
     component: () => import("@/views/About.vue"),
   },
+
+  // PRODUTOS
   {
     path: "/produtos",
     name: "Produtos",
@@ -31,6 +33,16 @@ const routes = [
       return route.params || {};
     },
     component: () => import("@/views/Produtos-Editar.vue"),
+  },
+
+  // CLIENTES
+  {
+    path: "/clientes",
+    name: "Clientes",
+    props(route) {
+      return route.params || {};
+    },
+    component: () => import("@/views/Clientes.vue"),
   },
 ];
 

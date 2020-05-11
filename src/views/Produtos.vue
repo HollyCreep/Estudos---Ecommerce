@@ -76,7 +76,7 @@
                 <v-card-title v-text="$options.filters.upperCase(item.referencia)"></v-card-title>
               </v-img>
               <v-divider></v-divider>
-              <v-expansion-panels>
+              <v-expansion-panels tile>
                 <v-expansion-panel>
                   <v-expansion-panel-header>
                     <b>Detalhes</b>
@@ -90,12 +90,11 @@
                         class="li-border-bottom"
                       >
                         <v-list-item-content :class="{ 'blue--text': sortBy === key }">
-                          <b>{{ key | upperCase }}:</b>
+                          <v-list-item-title>
+                            <b>{{ key | upperCase }}:</b>
+                          </v-list-item-title>
+                          <v-list-item-subtitle>{{ item[key.toLowerCase()] }}</v-list-item-subtitle>
                         </v-list-item-content>
-                        <v-list-item-content
-                          class="align-end; justify-end"
-                          :class="{ 'blue--text': sortBy === key }"
-                        >{{ item[key.toLowerCase()] }}</v-list-item-content>
                       </v-list-item>
                     </v-list>
                   </v-expansion-panel-content>
