@@ -8,6 +8,12 @@ const routes = [
     path: "/",
     name: "Home",
     component: Home,
+    redirect: "/login",
+  },
+  {
+    path: "/login",
+    name: "Login",
+    component: () => import("@/views/Login.vue"),
   },
   {
     path: "/about",

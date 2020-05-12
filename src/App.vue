@@ -23,7 +23,7 @@
 
     <v-app-bar app src="https://cdn.vuetifyjs.com/images/backgrounds/bg-2.jpg" dark clipped-left>
       <v-app-bar-nav-icon @click.stop="drawer = !drawer" />
-      <v-toolbar-title @click="loading = true">Menu</v-toolbar-title>
+      <v-toolbar-title>Menu</v-toolbar-title>
     </v-app-bar>
 
     <v-content>

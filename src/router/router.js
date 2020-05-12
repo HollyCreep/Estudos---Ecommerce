@@ -21,5 +21,12 @@ export default {
       id: 3,
       description: "Controller para Users",
     },
+    {
+      name: "Login",
+      path: "login",
+      icon: "mdi-dropbox",
+      id: 4,
+      description: "Login para Users",
+    },
   ],
 };
