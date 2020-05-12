@@ -7,9 +7,9 @@
           <v-row>
             <v-col cols="12">
               <VTextFieldWithValidation
-                rules="required|alpha_dash"
+                rules="required|email"
                 label="Usuário"
-                v-model="username"
+                v-model="email"
                 clearable
                 flat
                 solo
@@ -59,11 +59,10 @@ import VTextFieldWithValidation from "../components/inputs/VTextFieldWithValidat
 export default {
   name: "Login",
   data: () => ({
-    username: "",
+    email: "",
     password: "",
     teste: "",
     loading: false,
-    loader: null,
     pwdType: "password",
     overlay: true
   }),
@@ -74,7 +73,28 @@ export default {
   methods: {
     async submit() {
       const result = await this.$refs.obs.validate();
-      if (result) this.loader = "loading";
+      if (result) {
+        this.loading = true;
+        var data = {
+          email: this.email,
+          password: this.password
+        };
+        this.$http
+          .post("http://127.0.0.1:8000/api/auth/login", data, {
+            emulateJSON: true
+          })
+          .then(
+            response => {
+              this.cervejarias = response.data;
+              this.loading = false;
+              this.$router.push({ name: "Home" });
+            },
+            error => {
+              this.loading = false;
+              this.error = error;
+            }
+          );
+      }
     },
     showPwd() {
       if (this.pwdType === "password") {
@@ -82,19 +102,6 @@ export default {
       } else {
         this.pwdType = "password";
       }
-    }
-  },
-  watch: {
-    loader() {
-      const _self = this;
-      const l = this.loader;
-      this[l] = !this[l];
-      setTimeout(() => {
-        this[l] = false;
-        _self.overlay = false;
-      }, 3000);
-
-      this.loader = null;
     }
   }
 };
