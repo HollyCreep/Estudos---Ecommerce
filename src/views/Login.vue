@@ -1,7 +1,7 @@
 <template>
   <v-overlay opacity="1" :value="overlay" color="#2d3a4b" style="text-align: center">
     <ValidationObserver ref="obs">
-      <h1 class="title">Meu Estoque Digital</h1>
+      <h1 class="titulo">Meu Estoque Digital</h1>
       <v-card-text class="pd-left">
         <v-form>
           <v-row>
@@ -129,13 +129,6 @@ export default {
 $bg: #2d3a4b;
 $dark_gray: #889aa4;
 $light_gray: #eee;
-
-.title {
-  color: $light_gray;
-  font-size: 2rem !important;
-  line-height: 5rem;
-  font-family: "Dancing Script", cursive !important;
-}
 
 .login {
   background-color: $bg;

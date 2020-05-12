@@ -23,7 +23,10 @@
 
     <v-app-bar app src="https://cdn.vuetifyjs.com/images/backgrounds/bg-2.jpg" dark clipped-left>
       <v-app-bar-nav-icon @click.stop="drawer = !drawer" />
-      <v-toolbar-title @click="snackbar = !snackbar">Menu</v-toolbar-title>
+      <!-- <v-toolbar-title @click="snackbar = !snackbar">Menu</v-toolbar-title> -->
+      <v-flex class="d-flex justify-center align-center">
+        <h5 class="titulo">Meu Estoque Digital</h5>
+      </v-flex>
     </v-app-bar>
 
     <!-- Dialog de carregando -->

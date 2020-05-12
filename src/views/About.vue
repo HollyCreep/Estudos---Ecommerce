@@ -1,23 +1,21 @@
 <template>
-  <v-app id="app" class="mt-0">
-    <v-container grid-list-xl>
-      <image-input v-model="avatar">
-        <div slot="activator">
-          <v-avatar size="150px" v-ripple v-if="!avatar" class="grey lighten-3 mb-3">
-            <span>Click to add avatar</span>
-          </v-avatar>
-          <v-avatar size="150px" v-ripple v-else class="mb-3">
-            <img :src="avatar.imageURL" alt="avatar" />
-          </v-avatar>
-        </div>
-      </image-input>
-      <v-slide-x-transition>
-        <div v-if="avatar && saved == false">
-          <v-btn class="primary" @click="uploadImage" :loading="saving">Save Avatar</v-btn>
-        </div>
-      </v-slide-x-transition>
-    </v-container>
-  </v-app>
+  <v-container grid-list-xl>
+    <image-input v-model="avatar">
+      <div slot="activator">
+        <v-avatar size="150px" v-ripple v-if="!avatar" class="grey lighten-3 mb-3">
+          <span>Click to add avatar</span>
+        </v-avatar>
+        <v-avatar size="150px" v-ripple v-else class="mb-3">
+          <img :src="avatar.imageURL" alt="avatar" />
+        </v-avatar>
+      </div>
+    </image-input>
+    <v-slide-x-transition>
+      <div v-if="avatar && saved == false">
+        <v-btn class="primary" @click="uploadImage" :loading="saving">Save Avatar</v-btn>
+      </div>
+    </v-slide-x-transition>
+  </v-container>
 </template>
 
 <script>
