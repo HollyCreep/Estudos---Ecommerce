@@ -1,32 +1,76 @@
-export default {
-  menuLateral: [
-    {
-      name: "About",
-      path: "about",
-      icon: "mdi-alert-circle-outline",
-      id: 1,
-      description: "all about Brazil",
+const routes = [
+  {
+    path: "/",
+    redirect: "/login",
+  },
+  {
+    path: "/home",
+    name: "Home",
+    component: () => import("@/views/Home.vue"),
+  },
+  {
+    path: "/login",
+    name: "Login",
+    component: () => import("@/views/Login.vue"),
+  },
+  {
+    path: "/about",
+    name: "About",
+    component: () => import("@/views/About.vue"),
+  },
+
+  // PRODUTOS
+  {
+    path: "/produtos",
+    name: "Produtos",
+    meta: {
+      requiresAuth: true,
     },
-    {
-      name: "Produtos",
-      path: "produtos",
-      icon: "mdi-dropbox",
-      id: 2,
-      description: "Controller para Produtos",
+    component: () => import("@/views/Produtos.vue"),
+  },
+  {
+    path: "/produtos/cadastrar",
+    name: "cadastrarProdutos",
+    meta: {
+      requiresAuth: true,
     },
-    {
-      name: "Clientes",
-      path: "clientes",
-      icon: "mdi-dropbox",
-      id: 3,
-      description: "Controller para Users",
+    component: () => import("@/views/Produtos-Cadastrar.vue"),
+  },
+  {
+    path: "/produtos/editar/",
+    name: "editarProdutos",
+    meta: {
+      requiresAuth: true,
     },
-    {
-      name: "Login",
-      path: "login",
-      icon: "mdi-dropbox",
-      id: 4,
-      description: "Login para Users",
+    props(route) {
+      return route.params || {};
     },
-  ],
-};
+    component: () => import("@/views/Produtos-Editar.vue"),
+  },
+
+  // CLIENTES
+  {
+    path: "/clientes",
+    name: "Clientes",
+    meta: {
+      requiresAuth: true,
+    },
+    props(route) {
+      return route.params || {};
+    },
+    component: () => import("@/views/Clientes.vue"),
+  },
+  {
+    path: "/clientes/cadastrar",
+    name: "cadastrarUsuario",
+    meta: {
+      requiresAuth: true,
+    },
+    props(route) {
+      return route.params || {};
+    },
+    component: () => import("@/views/Clientes-Cadastrar.vue"),
+  },
+];
+
+export default routes;

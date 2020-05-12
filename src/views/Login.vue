@@ -42,8 +42,17 @@
             </v-col>
           </v-row>
           <v-row>
-            <v-col cols="12">
-              <v-btn color="primary" :loading="loading" :disabled="loading" @click="submit">Login</v-btn>
+            <v-col cols="12" class="d-flex justify-space-around ml-n5">
+              <router-link :to="{name: 'cadastrarUsuario'}">
+                <v-btn left color="grey darken-2" :loading="loading2" :disabled="loading">Registrar</v-btn>
+              </router-link>
+              <v-btn
+                left
+                color="primary"
+                :loading="loading"
+                :disabled="loading"
+                @click="submit"
+              >Login</v-btn>
             </v-col>
           </v-row>
         </v-form>
@@ -63,6 +72,7 @@ export default {
     password: "",
     teste: "",
     loading: false,
+    loading2: false,
     pwdType: "password",
     overlay: true
   }),
@@ -88,10 +98,18 @@ export default {
               this.cervejarias = response.data;
               this.loading = false;
               this.$router.push({ name: "Home" });
+              this.$emit("alerta", {
+                mensagem: "Login realizado com sucesso!",
+                tipo: "success"
+              });
             },
             error => {
               this.loading = false;
               this.error = error;
+              this.$emit("alerta", {
+                mensagem: "Login ou senha inválidos",
+                tipo: "error"
+              });
             }
           );
       }

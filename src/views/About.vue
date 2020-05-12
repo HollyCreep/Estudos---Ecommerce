@@ -23,7 +23,7 @@
 <script>
 import ImageInput from "../components/image-uploader.vue";
 export default {
-  name: "app",
+  name: "about",
   data() {
     return {
       avatar: null,

@@ -23,9 +23,10 @@
 
     <v-app-bar app src="https://cdn.vuetifyjs.com/images/backgrounds/bg-2.jpg" dark clipped-left>
       <v-app-bar-nav-icon @click.stop="drawer = !drawer" />
-      <v-toolbar-title>Menu</v-toolbar-title>
+      <v-toolbar-title @click="snackbar = !snackbar">Menu</v-toolbar-title>
     </v-app-bar>
 
+    <!-- Dialog de carregando -->
     <v-content>
       <v-dialog v-if="loading" v-model="loading" persistent retain-focus width="300">
         <v-card color="primary" dark>
@@ -37,29 +38,44 @@
           </v-card-text>
         </v-card>
       </v-dialog>
-      <router-view @loading=" carregamento"></router-view>
+      <router-view @loading=" carregamento" @alerta="exibeMensagem"></router-view>
     </v-content>
-    <v-footer color="blue darken-1" app>
+
+    <!-- Dialog de Mensagem -->
+    <v-snackbar v-model="snackbar" :timeout="timeout" :color="color">
+      {{ text }}
+      <v-btn color="#FFF" text @click="snackbar = false">Fechar</v-btn>
+    </v-snackbar>
+    <!-- <v-footer color="blue darken-1" app style="z-index: 5">
       <span class="white--text">&copy; 2019</span>
-    </v-footer>
+    </v-footer>-->
   </v-app>
 </template>
 
 <script>
-import router from "@/router/router.js";
+import router from "@/router/rotas-menu-lateral.js";
 export default {
   name: "App",
   props: {
     source: String
   },
   data: () => ({
-    drawer: null,
-    destinations: router.menuLateral,
-    loading: false
+    drawer: null, // toogle do menu lateral
+    destinations: router.menuLateral, //rotas do menu lateral
+    loading: false, //toggle do dialog de carregando
+    snackbar: false, //toogle do snackbar de alerta
+    color: "", //cor do snackbarr
+    text: "", //mensagem do snackbar
+    timeout: 2000 //tempo de vida do snackbar
   }),
   methods: {
     carregamento(status) {
       this.loading = status;
+    },
+    exibeMensagem(conteudo) {
+      this.text = conteudo.mensagem;
+      this.color = conteudo.tipo;
+      this.snackbar = true;
     }
   },
   watch: {
